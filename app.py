@@ -42,10 +42,10 @@ if menu == "Summarize":
         img_base64_string = charts[0].raster
         img = base64_to_image(img_base64_string)
         st.image(img)
-        
 
 
-        
+
+
 elif menu == "Question based Graph":
     st.subheader("Query your Data to Generate Graph")
     file_uploader = st.file_uploader("Upload your CSV", type="csv")
@@ -56,12 +56,12 @@ elif menu == "Question based Graph":
         text_area = st.text_area("Query your Data to Generate Graph", height=200)
         if st.button("Generate Graph"):
             if len(text_area) > 0:
-                st.info("Your Query: " + text_area)
-                lida = Manager(text_gen = llm("openai")) 
+                st.info(f"Your Query: {text_area}")
+                lida = Manager(text_gen = llm("openai"))
                 textgen_config = TextGenerationConfig(n=1, temperature=0.2, use_cache=True)
                 summary = lida.summarize("filename1.csv", summary_method="default", textgen_config=textgen_config)
                 user_query = text_area
-                charts = lida.visualize(summary=summary, goal=user_query, textgen_config=textgen_config)  
+                charts = lida.visualize(summary=summary, goal=user_query, textgen_config=textgen_config)
                 charts[0]
                 image_base64 = charts[0].raster
                 img = base64_to_image(image_base64)
